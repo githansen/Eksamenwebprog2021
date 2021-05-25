@@ -1,3 +1,5 @@
+//håndterer ikke feilmeldinger som blir sendt fra server
+
 function registrer(){
     const pakkeinformasjon = {
         fornavn: $("#fornavn").val(),
