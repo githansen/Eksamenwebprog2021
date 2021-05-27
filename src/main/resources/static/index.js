@@ -9,7 +9,12 @@ function registrer(){
         volum: $("#volum").val(),
         vekt: $("#vekt").val()
     }
-    if(validerfornavn(pakkeinformasjon.fornavn) && valideretternavn(pakkeinformasjon.etternavn) && validerpostnr(pakkeinformasjon.postnr) &&sjekkpostnr(pakkeinformasjon.postnr)) {
+console.log(validerfornavn(pakkeinformasjon.fornavn))
+    console.log(valideretternavn(pakkeinformasjon.etternavn))
+    console.log(validerpostnr(pakkeinformasjon.postnr))
+    console.log(sjekkpostnr(pakkeinformasjon.postnr))
+    if(validerfornavn(pakkeinformasjon.fornavn) && valideretternavn(pakkeinformasjon.etternavn) && validerpostnr(pakkeinformasjon.postnr) && sjekkpostnr(pakkeinformasjon.postnr)){
+        console.log("Sjekk")
         $.post("/Lagresending", pakkeinformasjon, function () {
         });
     }
@@ -46,12 +51,23 @@ function validerpostnr(postnr){
     }
     else{
         $("#postnrfeil").html("Postnr må være 4 siffer")
+        return false;
     }
 }
 
 function sjekkpostnr(postnr){
     const url = "/Sjekkpostnr?postnr=" + postnr
-    $.get(url, function(eksisterer){
-     return eksisterer
-    })
+let result = null;
+    $.ajax({
+        url: url,
+        type: 'get',
+
+        async: false,
+        success: function(data){
+             result = data
+        }
+    });
+    return result;
+
+
 }
